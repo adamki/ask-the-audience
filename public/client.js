@@ -17,3 +17,7 @@ socket.on('usersConnected', function (count) {
 socket.on('statusMessage', function(message){
   statusMessage.innerText = message;
 });
+
+socket.on('voteCount', function (votes) {
+  console.log(votes);
+})

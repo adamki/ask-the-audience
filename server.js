@@ -22,6 +22,8 @@ server.listen(port, function () {
 const io = socketIo(server);
 
 
+var votes = {};
+
 io.on('connection', function (socket) {
   console.log('A user has connected! There are ' + io.engine.clientsCount + ' clients');
 
@@ -29,16 +31,33 @@ io.on('connection', function (socket) {
 
   socket.emit('statusMessage', 'You have connected.');
 
-  socket.on('disconnect', function(){
-    console.log('A user has dis-connected! There are ' + io.engine.clientsCount + ' clients');
-    io.sockets.emit('usersConnected', io.engine.clientsCount);
+  socket.on('message', function (channel, message) {
+    if (channel === 'voteCast') {
+      votes[socket.id] = message;
+      socket.emit('voteCount', countVotes(votes));
+    }
   });
 
-  socket.on('message', function (channel, message) {
-    console.log(channel, message);
+  socket.on('disconnect', function(){
+    console.log('A user has dis-connected! There are ' + io.engine.clientsCount + ' clients');
+    delete votes[socket.id];
+    socket.emit('voteCount', countVotes(votes))
+    io.sockets.emit('usersConnected', io.engine.clientsCount);
   });
 });
 
+function countVotes(votes) {
+  var voteCount = {
+    A: 0,
+    B: 0,
+    C: 0,
+    D: 0
+  };
+  for (var vote in votes) {
+    voteCount[votes[vote]] ++
+  }
+  return voteCount;
+}
 
 module.exports = server;
 
