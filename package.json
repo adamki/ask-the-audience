@@ -1,0 +1,25 @@
+{
+  "name": "ask-the-audience",
+  "version": "1.0.0",
+  "description": "Websockets tutorials with meeka!",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adamki/ask-the-audience.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adamki/ask-the-audience/issues"
+  },
+  "homepage": "https://github.com/adamki/ask-the-audience#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "lodash": "^4.6.0",
+    "socket.io": "^1.4.5"
+  }
+}
