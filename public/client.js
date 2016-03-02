@@ -3,6 +3,7 @@ var socket = io();
 var connectionCount = document.getElementById('connection-count');
 var statusMessage   = document.getElementById('status-message');
 var currentVote     = document.getElementById('current-vote');
+var currentVoteItem = document.getElementById('vote-item');
 var buttons         = document.querySelectorAll('#choices button');
 
 for (var i = 0; i < buttons.length; i++) {
@@ -21,6 +22,11 @@ socket.on('statusMessage', function(message){
 
 socket.on('voteCount', function (votes) {
   currentVote.innerText = "Your current vote is: " + current(votes)
+  debugger
+  currentVoteItem.innerText = "A: " + votes.A +  "  --  " +
+                              "B: " + votes.B +  "  --  " +
+                              "C: " + votes.C +  "  --  " +
+                              "D: " + votes.D
 })
 
 function current(votes) {
