@@ -2,6 +2,7 @@ var socket = io();
 
 var connectionCount = document.getElementById('connection-count');
 var statusMessage   = document.getElementById('status-message');
+var currentVote     = document.getElementById('current-vote');
 var buttons         = document.querySelectorAll('#choices button');
 
 for (var i = 0; i < buttons.length; i++) {
@@ -19,5 +20,13 @@ socket.on('statusMessage', function(message){
 });
 
 socket.on('voteCount', function (votes) {
-  console.log(votes);
+  currentVote.innerText = "Your current vote is: " + current(votes)
 })
+
+function current(votes) {
+  for (var vote in votes) {
+    if (votes[vote] >= 1) {
+      return vote
+    }
+  }
+}
